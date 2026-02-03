@@ -1020,8 +1020,12 @@ const jobsData = [
     },
     {
         name: "Gamma",
-        website: "https://gamma.app/careers",
-        jobs: ["Career page to be accessed"]
+        website: "https://jobs.ashbyhq.com/gamma",
+        jobs: [
+            "Regional Community Manager - Brazil",
+            "Regional Community Manager - Japan",
+            "Regional Community Manager - Germany"
+        ]
     },
     {
         name: "Clay",
@@ -1234,7 +1238,23 @@ const jobsData = [
     },
     {
         name: "Tavus",
-        website: "https://www.tavus.io/careers",
-        jobs: ["Career page to be accessed"]
+        website: "https://jobs.ashbyhq.com/tavus",
+        jobs: [
+            "AI Researcher (Large Language Models)",
+            "AI Researcher (Multimodal Audio/Video Generation)",
+            "AI Researcher (Multimodal Perception Models)",
+            "AI Researcher (Rendering)",
+            "AI Researcher (Voice)",
+            "Customer Engineer",
+            "Head of Marketing",
+            "Senior+ AI Researcher (Large Language Models)",
+            "Senior+ AI Researcher (Multimodal Perception Models)",
+            "Senior Product Designer",
+            "Senior+ Product Engineer",
+            "Senior Recruiter",
+            "Senior Software Engineer (Agentic Systems)",
+            "Senior Software Engineer (CVI)",
+            "Solutions Engineer"
+        ]
     }
 ];
