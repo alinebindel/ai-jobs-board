@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Startups Job Board - Top 50 Companies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .search-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .company-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .job-count {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .company-website {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .company-website:hover {
+            text-decoration: underline;
+        }
+
+        .jobs-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .company-card.expanded .jobs-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .job-item {
+            padding: 10px;
+            border-left: 3px solid #667eea;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .expand-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        .expand-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            padding: 40px;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Startups Job Board</h1>
+            <p>Top 50 AI Application Layer Companies from a16z Report</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCompanies">50</div>
+                <div class="stat-label">Companies</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalJobs">0</div>
+                <div class="stat-label">Total Jobs</div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search by company name or job title...">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All Companies</button>
+                <button class="filter-btn" data-filter="hiring">Actively Hiring</button>
+                <button class="filter-btn" data-filter="remote">Remote Available</button>
+            </div>
+        </div>
+
+        <div class="companies-grid" id="companiesGrid">
+            <div class="loading">Loading job data...</div>
+        </div>
+
+        <footer>
+            <p>Data sourced from company career pages | Last updated: <span id="lastUpdated"></span></p>
+            <p>Based on "The AI Application Spending Report" by a16z</p>
+        </footer>
+    </div>
+
+    <script src="jobs-data.js"></script>
+    <script>
+        // Set last updated date
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
+
+        // Render companies
+        function renderCompanies(companies) {
+            const grid = document.getElementById('companiesGrid');
+            grid.innerHTML = '';
+
+            let totalJobs = 0;
+            companies.forEach(company => {
+                totalJobs += company.jobs.length;
+            });
+            document.getElementById('totalJobs').textContent = totalJobs.toLocaleString();
+
+            companies.forEach(company => {
+                const card = document.createElement('div');
+                card.className = 'company-card';
+                card.innerHTML = `
+                    <div class="company-header">
+                        <div class="company-name">${company.name}</div>
+                        <div class="job-count">${company.jobs.length} jobs</div>
+                    </div>
+                    ${company.website ? `<a href="${company.website}" target="_blank" class="company-website">Visit careers page →</a>` : ''}
+                    <button class="expand-btn" onclick="toggleExpand(this)">View All Jobs</button>
+                    <div class="jobs-list">
+                        ${company.jobs.map(job => `<div class="job-item">${job}</div>`).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleExpand(btn) {
+            const card = btn.closest('.company-card');
+            card.classList.toggle('expanded');
+            btn.textContent = card.classList.contains('expanded') ? 'Hide Jobs' : 'View All Jobs';
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.company-card');
+
+            cards.forEach(card => {
+                const companyName = card.querySelector('.company-name').textContent.toLowerCase();
+                const jobs = Array.from(card.querySelectorAll('.job-item'))
+                    .map(job => job.textContent.toLowerCase());
+
+                const matches = companyName.includes(searchTerm) ||
+                              jobs.some(job => job.includes(searchTerm));
+
+                card.style.display = matches ? 'block' : 'none';
+            });
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Add filter logic here when data includes remote/hiring status
+            });
+        });
+
+        // Initialize with data
+        if (typeof jobsData !== 'undefined') {
+            renderCompanies(jobsData);
+        }
+    </script>
+</body>
+</html>
