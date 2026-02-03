@@ -286,6 +286,7 @@
             companies.forEach(company => {
                 const card = document.createElement('div');
                 card.className = 'company-card';
+                card.dataset.source = company.source;
                 card.innerHTML = `
                     <div class="company-header">
                         <div class="company-name">${company.name}</div>
@@ -329,18 +330,64 @@
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                // Add filter logic here when data includes remote/hiring status
+
+                const filter = btn.dataset.filter;
+                const cards = document.querySelectorAll('.company-card');
+
+                cards.forEach(card => {
+                    const source = card.dataset.source;
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else if (filter === 'ai' && (source === 'ai' || source === 'both')) {
+                        card.style.display = 'block';
+                    } else if (filter === 'nxtp' && (source === 'nxtp' || source === 'both')) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
             });
         });
 
-        // Combine both data sources
+        // Combine both data sources with deduplication
         let allCompanies = [];
+        const companyMap = new Map();
+
+        // Add AI companies first
         if (typeof jobsData !== 'undefined') {
-            allCompanies = allCompanies.concat(jobsData.map(c => ({...c, source: 'ai'})));
+            jobsData.forEach(c => {
+                const key = c.name.toLowerCase().trim();
+                companyMap.set(key, {...c, source: 'ai'});
+            });
         }
+
+        // Add NXTP companies, merging if duplicate found
         if (typeof nxtpJobsData !== 'undefined') {
-            allCompanies = allCompanies.concat(nxtpJobsData.map(c => ({...c, source: 'nxtp'})));
+            nxtpJobsData.forEach(c => {
+                const key = c.name.toLowerCase().trim();
+                if (companyMap.has(key)) {
+                    // Merge: combine jobs and add both sources
+                    const existing = companyMap.get(key);
+                    const mergedJobs = [...existing.jobs];
+                    c.jobs.forEach(job => {
+                        if (!mergedJobs.includes(job)) {
+                            mergedJobs.push(job);
+                        }
+                    });
+                    companyMap.set(key, {
+                        ...existing,
+                        jobs: mergedJobs,
+                        source: 'both',
+                        description: c.description || existing.description,
+                        geography: c.geography || existing.geography
+                    });
+                } else {
+                    companyMap.set(key, {...c, source: 'nxtp'});
+                }
+            });
         }
+
+        allCompanies = Array.from(companyMap.values());
 
         // Initialize with data
         if (allCompanies.length > 0) {
