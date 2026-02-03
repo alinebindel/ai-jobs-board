@@ -283,10 +283,11 @@
             });
             document.getElementById('totalJobs').textContent = totalJobs.toLocaleString();
 
-            companies.forEach(company => {
+            companies.forEach((company, index) => {
                 const card = document.createElement('div');
                 card.className = 'company-card';
                 card.dataset.source = company.source;
+                card.dataset.companyIndex = index;
                 card.innerHTML = `
                     <div class="company-header">
                         <div class="company-name">${company.name}</div>
@@ -314,14 +315,29 @@
             const cards = document.querySelectorAll('.company-card');
 
             cards.forEach(card => {
-                const companyName = card.querySelector('.company-name').textContent.toLowerCase();
-                const jobs = Array.from(card.querySelectorAll('.job-item'))
-                    .map(job => job.textContent.toLowerCase());
+                const companyIndex = card.dataset.companyIndex;
+                const company = allCompanies[companyIndex];
 
-                const matches = companyName.includes(searchTerm) ||
-                              jobs.some(job => job.includes(searchTerm));
+                const companyNameMatch = company.name.toLowerCase().includes(searchTerm);
+                const jobMatches = company.jobs.filter(job =>
+                    job.toLowerCase().includes(searchTerm)
+                );
 
-                card.style.display = matches ? 'block' : 'none';
+                if (companyNameMatch || jobMatches.length > 0) {
+                    card.style.display = 'block';
+
+                    // Auto-expand if searching for jobs (not just company name)
+                    if (jobMatches.length > 0 && searchTerm && !companyNameMatch) {
+                        card.classList.add('expanded');
+                        card.querySelector('.expand-btn').textContent = 'Hide Jobs';
+                    } else if (!searchTerm) {
+                        // Reset expansion when search is cleared
+                        card.classList.remove('expanded');
+                        card.querySelector('.expand-btn').textContent = 'View All Jobs';
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
             });
         });
 
