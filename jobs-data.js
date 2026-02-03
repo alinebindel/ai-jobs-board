@@ -825,8 +825,28 @@ const jobsData = [
     },
     {
         name: "Metaview",
-        website: "https://www.metaview.ai/careers",
-        jobs: ["Career page to be accessed"]
+        website: "https://jobs.ashbyhq.com/metaview",
+        jobs: [
+            "Account Executive, Enterprise",
+            "Account Executive, Mid Market",
+            "Account Executive, SMB",
+            "Business Analytics",
+            "Chief of Staff",
+            "Director of Sales, EMEA",
+            "Engagement Associate",
+            "Engagement Manager",
+            "Finance Operations",
+            "Growth Marketing Manager",
+            "GTM Recruiter",
+            "Product Designer",
+            "Product Engineer (Backend-biased)",
+            "Product Engineer (Frontend-biased)",
+            "Product Marketing Manager",
+            "Revenue Operations",
+            "Sales Development Representative",
+            "Technical Recruiter",
+            "Technical Support Engineer"
+        ]
     },
     {
         name: "ADEPT",
@@ -981,8 +1001,40 @@ const jobsData = [
     },
     {
         name: "Cognition",
-        website: "https://www.cognition-labs.com/careers",
-        jobs: ["Career page to be accessed"]
+        website: "https://jobs.ashbyhq.com/cognition",
+        jobs: [
+            "AI Enablement Engineer",
+            "Analytics Engineer",
+            "Business Operations",
+            "Data Engineer",
+            "Delta Engineer",
+            "Delta Engineer - Federal",
+            "Delta Engineer - UK",
+            "Deployed Engineer",
+            "Deployed Engineer - UK",
+            "Engagement Manager",
+            "Enterprise Narrative",
+            "Federal Account Executive",
+            "Federal Civilian GTM Leader",
+            "Field Marketer",
+            "Founding Country Leader - Japan",
+            "General Application",
+            "GTM Manager",
+            "GTM Manager - Enterprise",
+            "GTM Manager - UK",
+            "Integrated Campaigns Manager",
+            "International Field CTO",
+            "IT Engineer",
+            "Machine Learning Researcher",
+            "Partner Deployed Engineer - India",
+            "Partner Marketer",
+            "Product Engineer",
+            "Revenue Operations",
+            "Sales Development Representative",
+            "Software Engineer",
+            "Special Projects Engineer",
+            "Special Projects Engineer - UK"
+        ]
     },
     {
         name: "OpusClip",
