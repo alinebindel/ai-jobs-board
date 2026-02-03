@@ -232,8 +232,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>AI Startups Job Board</h1>
-            <p>Top 50 AI Application Layer Companies from a16z Report</p>
+            <h1>Startup Job Board</h1>
+            <p>AI Companies from a16z Report + NXTP Ventures Portfolio</p>
         </header>
 
         <div class="stats">
@@ -251,8 +251,8 @@
             <input type="text" class="search-input" id="searchInput" placeholder="Search by company name or job title...">
             <div class="filters">
                 <button class="filter-btn active" data-filter="all">All Companies</button>
-                <button class="filter-btn" data-filter="hiring">Actively Hiring</button>
-                <button class="filter-btn" data-filter="remote">Remote Available</button>
+                <button class="filter-btn" data-filter="ai">AI Companies (a16z)</button>
+                <button class="filter-btn" data-filter="nxtp">NXTP Portfolio</button>
             </div>
         </div>
 
@@ -267,6 +267,7 @@
     </div>
 
     <script src="jobs-data.js"></script>
+    <script src="nxtp-jobs-data.js"></script>
     <script>
         // Set last updated date
         document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
@@ -332,10 +333,22 @@
             });
         });
 
-        // Initialize with data
+        // Combine both data sources
+        let allCompanies = [];
         if (typeof jobsData !== 'undefined') {
-            renderCompanies(jobsData);
+            allCompanies = allCompanies.concat(jobsData.map(c => ({...c, source: 'ai'})));
         }
+        if (typeof nxtpJobsData !== 'undefined') {
+            allCompanies = allCompanies.concat(nxtpJobsData.map(c => ({...c, source: 'nxtp'})));
+        }
+
+        // Initialize with data
+        if (allCompanies.length > 0) {
+            renderCompanies(allCompanies);
+        }
+
+        // Update total companies count
+        document.getElementById('totalCompanies').textContent = allCompanies.length;
     </script>
 </body>
 </html>
