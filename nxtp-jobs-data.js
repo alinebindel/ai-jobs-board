@@ -144,8 +144,8 @@ const nxtpJobsData = [
         jobs: []
     },
     {
-        name: "Looggi",
-        website: "https://www.looggi.com/careers",
+        name: "Loggi",
+        website: "https://www.loggi.com/careers",
         description: "B2B platform for last mile cargo delivery",
         geography: "Brazil, Mexico, Colombia",
         jobs: []
